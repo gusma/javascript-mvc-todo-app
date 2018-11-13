@@ -2,6 +2,7 @@ const Model = function ModelFn (initialValue) {
     this.todos = initialValue;
 
     this.todoAdded = new Evento(this);
+    this.todoCleared = new Evento(this);
 }
 
 Model.prototype.add = function addFn(todo) {
@@ -16,4 +17,10 @@ Model.prototype.add = function addFn(todo) {
 
 Model.prototype.get = function getFn() {
     return this.todos;
-}
+};
+
+Model.prototype.clear = function clearFn() {
+    this.todos = [];
+
+    this.todoCleared.notificar();
+};
