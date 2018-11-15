@@ -4,22 +4,33 @@ const View = function ViewFn(model, controller) {
 
     this.$todoName = $('#todo-name');
     this.$addTodo = $('#add-todo');
+    this.$removeTodo = $('#remove-todo');
     this.$clearTodos = $('#clear-todos');
     this.$todoList = $('#todo-list');
 
     const addTodoHandler = this.addTodoHandler.bind(this);
     this.$addTodo.on('click', addTodoHandler);
 
+    const removeTodoHandler = this.removeTodoHandler.bind(this);
+    this.$removeTodo.on('click',removeTodoHandler);
+
     const clearTodoHandler = this.clearTodoHandler.bind(this);
     this.$clearTodos.on('click', clearTodoHandler);
 
     this.model.todoAdded.suscribir(this.update.bind(this));
+    this.model.todoRemoved.suscribir(this.update.bind(this));
     this.model.todoCleared.suscribir(this.update.bind(this));
 };
 
 View.prototype.addTodoHandler = function addTodoHandlerFn() {
     const todo = this.$todoName.val();
     this.controller.addTodo(todo);
+    this.$todoName.val('');
+}
+
+View.prototype.removeTodoHandler = function removeTodoHandlerFn() {
+    const todo = this.$todoName.val();
+    this.controller.removeTodo(todo);
     this.$todoName.val('');
 }
 
